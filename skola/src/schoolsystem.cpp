@@ -84,6 +84,10 @@ void Schoolsystem::removeStudent2()
 
 void Schoolsystem::addNewClass()
 {
+	std::string className;
+	std::cout << "whats the new class name" << "\n";
+	std::cin >> className;
+	schoolClasses.push_back(className);
 }
 
 void Schoolsystem::perCheckSystem()
@@ -92,12 +96,67 @@ void Schoolsystem::perCheckSystem()
 
 void Schoolsystem::perInformation()
 {
+	std::string studentName;
+	std::cout << "what is the students name that you want information of" << "\n";
+	std::cin >> studentName;
+	for(auto i : students)
+	{
+		if (studentName == i.name)
+		{
+			std::cout << "name: " << i.name << "\n";
+			std::cout << "age: " << i.age << "\n";
+			std::cout << "class: " << i.className << "\n";
+			break;
+		}
+	}
+
 }
 
 void Schoolsystem::getAllPerInClass()
 {
+	std::string className;
+	std::cout << "what is the class name" "\n";
+	std::cin >> className;
+
+	for (auto& i : schoolClasses)
+	{
+		if (className != i)
+		{
+			return;
+		}
+	}
+	for (auto i : students)
+	{
+		if (i.className == className)
+		{
+			std::cout << "name:" << i.name << "\n";
+		}
+	}
 }
 
 void Schoolsystem::addPerToClass()
 {
+	std::string studentNameInput;
+	std::string classNameInput;
+	std::cout << "what is the class name" << "\n";
+    std::cin >> classNameInput;
+	for (auto& i : schoolClasses)
+	{
+		if(classNameInput != i)
+		{
+			break;
+		}
+	}
+	std::cout << "what is the students name that you want to add to the class" << "\n";
+	std::cin >> studentNameInput;
+	for (auto i : students)
+	{
+		if (studentNameInput == i.name)
+		{
+			i.className = classNameInput;
+			break;
+		}
+	}
+
+
 }
