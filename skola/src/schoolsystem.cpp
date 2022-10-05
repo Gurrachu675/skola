@@ -45,7 +45,20 @@ void Schoolsystem::run()
 		}
 	}
 }
+//en funktion som kollar om klassen(className) existerar
+bool Schoolsystem::classExists(std::string className) 
+{
+	for (auto& i : schoolClasses)
+	{
+		if (className == i)
+		{
+			return true;
+		}
+	}
 
+	return false;
+}
+//en funktion som lägger till en elev i systemet
 void Schoolsystem::addStudent()
 {
 	std::string nameInput;
@@ -61,11 +74,23 @@ void Schoolsystem::addStudent()
 
 	students.push_back(student);
 }
-
+//en funktion som tar bort en elevens klass
 void Schoolsystem::removeStudent()
 {
-}
+	std::string nameInput;
 
+	std::cout << "enter the name of the peron that you want to remove from class" << "\n";
+	std::cin >> nameInput;
+	for (auto& i : students)
+	{
+		if (nameInput == i.name)
+		{
+			i.className = "";
+			break;
+		}
+	}
+}
+//en funktion som tar bort en person helt från systemet
 void Schoolsystem::removeStudent2()
 {
 	std::string nameInput;
@@ -74,14 +99,14 @@ void Schoolsystem::removeStudent2()
 	std::cin >> nameInput; 
 
 	for (int i = 0; i < students.size(); i++) {
-		if (students[i].name.compare(nameInput) == 0) {
+		if (nameInput == students[i].name) {
 			std::cout << "remove " << students[i].name;
 			students.erase(students.begin() + i);
 			break;
 		}
 	}
 }
-
+//en funktion som skapar en klass
 void Schoolsystem::addNewClass()
 {
 	std::string className;
@@ -89,11 +114,24 @@ void Schoolsystem::addNewClass()
 	std::cin >> className;
 	schoolClasses.push_back(className);
 }
-
+//en funktion som kollar om en person finns i systemet
 void Schoolsystem::perCheckSystem()
 {
-}
+	std::string studentName;
+	std::cout << "what is the student name" << "\n";
+	std::cin >> studentName;
+	for (auto& i : students)
+	{
+		if (studentName == i.name)
+		{
+			std::cout << "person exist in the system" << "\n";
+			return;
+		}
+	}
 
+	std::cout << "person does not exist in the system" << "\n";
+}
+//en funktion som skriver ut information om en person i systemet
 void Schoolsystem::perInformation()
 {
 	std::string studentName;
@@ -111,21 +149,19 @@ void Schoolsystem::perInformation()
 	}
 
 }
-
+//en funktion som skriver ut alla personer i en klass
 void Schoolsystem::getAllPerInClass()
 {
 	std::string className;
 	std::cout << "what is the class name" "\n";
 	std::cin >> className;
 
-	for (auto& i : schoolClasses)
-	{
-		if (className != i)
-		{
-			return;
-		}
+	if (!classExists(className)) {
+		std::cout << "could not find class";
+		return;
 	}
-	for (auto i : students)
+
+	for (auto &i : students)
 	{
 		if (i.className == className)
 		{
@@ -133,23 +169,22 @@ void Schoolsystem::getAllPerInClass()
 		}
 	}
 }
-
+//en funktion som lägger till en exsisterande person i en exsisternade klass
 void Schoolsystem::addPerToClass()
 {
 	std::string studentNameInput;
 	std::string classNameInput;
 	std::cout << "what is the class name" << "\n";
     std::cin >> classNameInput;
-	for (auto& i : schoolClasses)
-	{
-		if(classNameInput != i)
-		{
-			break;
-		}
+
+	if (!classExists(classNameInput)) {
+		std::cout << "could not find class";
+		return;
 	}
+
 	std::cout << "what is the students name that you want to add to the class" << "\n";
 	std::cin >> studentNameInput;
-	for (auto i : students)
+	for (auto& i : students)
 	{
 		if (studentNameInput == i.name)
 		{
@@ -157,6 +192,4 @@ void Schoolsystem::addPerToClass()
 			break;
 		}
 	}
-
-
 }

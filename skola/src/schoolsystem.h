@@ -7,6 +7,7 @@ class Schoolsystem
 {
 public:
 	void run();
+	bool classExists(std::string className);
 	void addStudent();
 	void removeStudent();
 	void removeStudent2();
